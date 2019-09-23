@@ -31,12 +31,7 @@ class CallKotlinTest {
   @JvmField @Rule val timeout: TestRule = Timeout(30_000, TimeUnit.MILLISECONDS)
   @JvmField @Rule val server = MockWebServer()
   @JvmField @Rule val clientTestRule = OkHttpClientTestRule()
-
-  private lateinit var client: OkHttpClient
-
-  @Before fun setUp() {
-    client = clientTestRule.newClient()
-  }
+  private val client = clientTestRule.newClient()
 
   @Test
   fun legalToExecuteTwiceCloning() {
