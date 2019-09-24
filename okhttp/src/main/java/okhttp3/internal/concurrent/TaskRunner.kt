@@ -132,7 +132,7 @@ class TaskRunner(
         1, // maximumPoolSize.
         60L, TimeUnit.SECONDS, // keepAliveTime.
         SynchronousQueue(),
-        threadFactory("OkHttp Task Coordinator", false)
+        threadFactory("OkHttp Task Coordinator", true)
     )
 
     private val taskExecutor = ThreadPoolExecutor(
@@ -165,5 +165,9 @@ class TaskRunner(
       coordinatorExecutor.shutdown()
       taskExecutor.shutdown()
     }
+  }
+
+  companion object {
+    val INSTANCE = TaskRunner(RealBackend())
   }
 }

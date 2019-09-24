@@ -37,7 +37,7 @@ class TaskRunnerRealBackendTest {
   @Test fun test() {
     val t1 = System.nanoTime() / 1e6
 
-    queue.schedule(object : Task("task", false) {
+    queue.schedule(object : Task("task") {
       val delays = mutableListOf(TimeUnit.MILLISECONDS.toNanos(1000), -1L)
       override fun runOnce(): Long {
         log.put("runOnce delays.size=${delays.size}")
