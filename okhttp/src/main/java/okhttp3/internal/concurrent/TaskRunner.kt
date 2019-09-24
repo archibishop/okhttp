@@ -126,13 +126,13 @@ class TaskRunner(
     fun coordinatorWait(taskRunner: TaskRunner, nanos: Long)
   }
 
-  class RealBackend : Backend {
+  internal class RealBackend : Backend {
     private val coordinatorExecutor = ThreadPoolExecutor(
         0, // corePoolSize.
         1, // maximumPoolSize.
         60L, TimeUnit.SECONDS, // keepAliveTime.
         SynchronousQueue(),
-        threadFactory("OkHttp Task Coordinator", false)
+        threadFactory("OkHttp Task Coordinator", true)
     )
 
     private val taskExecutor = ThreadPoolExecutor(
@@ -161,9 +161,13 @@ class TaskRunner(
       taskRunner.objectWaitNanos(nanos)
     }
 
-    fun shutDown() {
+    fun shutdown() {
       coordinatorExecutor.shutdown()
       taskExecutor.shutdown()
     }
+  }
+
+  companion object {
+    val INSTANCE = TaskRunner(RealBackend())
   }
 }
