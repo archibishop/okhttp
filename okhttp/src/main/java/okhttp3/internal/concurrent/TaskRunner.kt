@@ -168,6 +168,7 @@ class TaskRunner(
   }
 
   companion object {
+    @JvmField
     val INSTANCE = TaskRunner(RealBackend())
   }
 }
